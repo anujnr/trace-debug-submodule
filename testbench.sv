@@ -28,7 +28,7 @@ module tb_nonsynth;
     begin
       // waveform generation
       $dumpfile("dump.vcd");
-      $dumpvars(1,tb_nonsynth);
+      $dumpvars(2,tb_nonsynth);
 
       //inital inputs values
       clk=0;
@@ -59,10 +59,11 @@ module tb_nonsynth;
           , .fifo_data(fifo_data)
           , .fifo_valid(fifo_valid)
           , .fifo_ready(fifo_ready)
+          , .rst(rst)
          );
 
 /* end synthesizeable code */
-  always @(negedge clk)
+  always @(posedge clk)
     begin
       if(clk_cnt>0)
         begin
@@ -70,11 +71,13 @@ module tb_nonsynth;
           fifo_ready=1;
           sample_data=clk_cnt[0+:sample_width_lp];
           if(clk_cnt==3||clk_cnt==4) sample_valid=0; //when fifo_ready=1 data flows in accordance to inputs
-          if(clk_cnt==7||clk_cnt==8) fifo_ready=0; 
+          if(clk_cnt==7||clk_cnt==8) fifo_ready=0;
+          if(clk_cnt==14|| clk_cnt==15) sample_valid=0;
+          if(clk_cnt>10 && clk_cnt<28) fifo_ready=0;
+          if(clk_cnt==29) fifo_ready=0; 
         end
-      if(clk_cnt==20) $finish;
+      if(clk_cnt==32) $finish;
     end
  
 
 endmodule
-  
