@@ -35,17 +35,11 @@ module dut #(parameter sample_width_p = 16
           fifo_data = sample_valid? {1'b0,sample_data}: '0;
       	  fifo_valid = sample_valid;
         end
-      
-      else if(~fifo_ready && sample_valid) //data loss
+        
+      else
         begin
           fifo_data  = '0;
           fifo_valid = '0; 
-        end
-  
-      else
-	begin
-          fifo_data  = fifo_data;
-      	  fifo_valid = fifo_valid;
         end
     end
   
