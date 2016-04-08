@@ -32,15 +32,10 @@ module dut #(parameter sample_width_p = 16
 
       else if(fifo_ready) //generic case
         begin
-          fifo_data = sample_valid? {1'b0,sample_data}: '0;
+          fifo_data = {1'b0,sample_data};
       	  fifo_valid = sample_valid;
         end
         
-      else
-        begin
-          fifo_data  = '0;
-          fifo_valid = '0; 
-        end
     end
   
   always_ff @(posedge clk)
