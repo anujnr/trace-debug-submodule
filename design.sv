@@ -1,7 +1,20 @@
-//Backpressure module for trace debug
-//Anuj Rao 4/4/16
-//Contact: anr044@ucsd.edu or anujnr@gmail.com
+// Copyright 2016 by the authors
 //
+// Copyright and related rights are licensed under the Solderpad
+// Hardware License, Version 0.51 (the "License"); you may not use
+// this file except in compliance with the License. You may obtain a
+// copy of the License at http://solderpad.org/licenses/SHL-0.51.
+// Unless required by applicable law or agreed to in writing,
+// software, hardware and materials distributed under this License is
+// distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
+// OF ANY KIND, either express or implied. See the License for the
+// specific language governing permissions and limitations under the
+// License.
+//
+// Authors:
+//    Anuj Rao <anujnr@gmail.com>
+
+//Backpressure module for trace debug
 
 module dut #(parameter sample_width_p = 16
              , counter_width_p = 16)
@@ -24,13 +37,13 @@ module dut #(parameter sample_width_p = 16
   always_comb
     begin      
 
-      if(fifo_ready && ctr!=0) //ctr had been incremented 
+      if(ctr!=0) //ctr had been incremented 
         begin
           fifo_data = {1'b1,ctr};
           fifo_valid = 1'b1;
         end
 
-      else if(fifo_ready) //generic case
+      else //generic case
         begin
           fifo_data = {1'b0,sample_data};
       	  fifo_valid = sample_valid;
